@@ -43,7 +43,7 @@ def test_camera():
 
 def track_center(vid):
     ret, frame = vid.read()
-    lower_red = np.array([0, 150, 100])
+    lower_red = np.array([0, 50, 50])
     upper_red = np.array([10, 255, 255])
     lower_blue = np.array([101,50,38])
     upper_blue = np.array([110,255,255])
@@ -64,6 +64,7 @@ def track_center(vid):
     return -1, -1, -1
 
 if __name__ == '__main__':
+    test_camera()
     vid = cv2.VideoCapture(0)
     screen_width = vid.get(cv2.CAP_PROP_FRAME_WIDTH)
     if(screen_width<1):
