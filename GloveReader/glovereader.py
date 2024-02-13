@@ -11,7 +11,7 @@ ser = serial.Serial(port, 9600, timeout=1)
 #         break
 #     except serial.SerialException:
 #         port = input("Invalid port try again: ")
-pinky, ring, middle, pointer, thumb = 'N', 'M', 'O', 'P', 'Q'
+pinky, ring, middle, pointer, thumb = b'N', b'O', b'P', b'Q', b'R'
 # fig, ax = plt.subplots()
 # fingers = ['pinky', 'ring', 'middle', 'pointer', 'thumb']
 flexPercent =[0,0,0,0,0]
