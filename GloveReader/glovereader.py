@@ -2,15 +2,16 @@ import serial
 import matplotlib.pyplot as plt
 
 
-port = 'COM9'
-while True:
-    try:
-        ser = serial.Serial(port, 9600)
-        break
-    except serial.SerialException:
-        port = input("Invalid port try again: ")
-
-pinky, ring, middle, pointer, thumb = 78, 79, 80, 81, 82
+port = 'COM11'
+print("ASASASSA")
+ser = serial.Serial(port, 9600, timeout=1)
+# while True:
+#     try:
+#         ser = serial.Serial(port, 9600)
+#         break
+#     except serial.SerialException:
+#         port = input("Invalid port try again: ")
+pinky, ring, middle, pointer, thumb = 'N', 'M', 'O', 'P', 'Q'
 # fig, ax = plt.subplots()
 # fingers = ['pinky', 'ring', 'middle', 'pointer', 'thumb']
 flexPercent =[0,0,0,0,0]
@@ -28,15 +29,15 @@ flexPercent =[0,0,0,0,0]
 
 
 ser.write(pinky)
-flexPercent[0] = ser.read(2)
+flexPercent[0] = int(ser.readline().strip())
 ser.write(ring)
-flexPercent[1] = ser.read(2)
+flexPercent[1] = int(ser.readline().strip())
 ser.write(middle)
-flexPercent[2] = ser.read(2)
+flexPercent[2] = int(ser.readline().strip())
 ser.write(pointer)
-flexPercent[3] = ser.read(2)
+flexPercent[3] = int(ser.readline().strip())
 ser.write(thumb)
-flexPercent[3] = ser.read(2)
+flexPercent[4] = int(ser.readline().strip())
 
 print(flexPercent)
 ser.close()
