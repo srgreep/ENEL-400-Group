@@ -2,8 +2,7 @@ import serial
 import matplotlib.pyplot as plt
 
 
-port = 'COM11'
-print("ASASASSA")
+port = 'COM9'
 ser = serial.Serial(port, 9600, timeout=1)
 # while True:
 #     try:
