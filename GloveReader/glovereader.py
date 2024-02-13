@@ -3,13 +3,12 @@ import matplotlib.pyplot as plt
 
 
 port = 'COM9'
-ser = serial.Serial(port, 9600, timeout=1)
-# while True:
-#     try:
-#         ser = serial.Serial(port, 9600)
-#         break
-#     except serial.SerialException:
-#         port = input("Invalid port try again: ")
+while True:
+    try:
+        ser = serial.Serial(port, 9600, timeout=0.5)
+        break
+    except serial.SerialException:
+        port = input("Invalid port try again: ")
 pinky, ring, middle, pointer, thumb = b'N', b'O', b'P', b'Q', b'R'
 # fig, ax = plt.subplots()
 # fingers = ['pinky', 'ring', 'middle', 'pointer', 'thumb']
