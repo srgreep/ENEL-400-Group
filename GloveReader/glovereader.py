@@ -1,6 +1,7 @@
 import serial
 import matplotlib.pyplot as plt
-
+import socket
+from time import sleep
 
 #function to update plot with new values
 def update_plot():
@@ -44,7 +45,7 @@ def calibration():
         # print()
 
 def plot_fingers():
-    for i in range(1000):
+    for i in range(10000):
         #pinky value
         ser.write(pinky)
         flexValues[0] = map_range(int(ser.readline().strip()), minValues[0], maxValues[0])
@@ -66,6 +67,10 @@ def plot_fingers():
         flexValues[4] = map_range(int(ser.readline().strip()), minValues[4], maxValues[4])
         update_plot()
 
+def unityHand(pointer, middle, ring, pinky, thumb):
+    send = "%s, %s, %s, %s, %s" %(str(pointer), str(middle), str(ring), str(pinky), str(thumb))
+    sock.sendto(str.encode(str(send)), serverAddressPort)
+    sleep(.1)
 
 def map_range(x, in_min, in_max):
   if(x ==0 or in_min==in_max):
@@ -74,6 +79,8 @@ def map_range(x, in_min, in_max):
 
 if __name__ == "__main__":
     port = 'COM9'
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    serverAddressPort = ("127.0.0.1", 5052)
     #check to see if port is there
     while True:
         try:
@@ -97,5 +104,4 @@ if __name__ == "__main__":
     ax.set_ylim(0, 100)
     calibration()
     plot_fingers()
-
     ser.close()
