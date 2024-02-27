@@ -12,6 +12,7 @@ def update_plot():
 
 #transmit and recieve finger values 100000 times
 def calibration():
+    print("calibrating glove, Open and close fingers to extremes")
     for i in range(200):
         #pinky value
         ser.write(pinky)
@@ -38,12 +39,10 @@ def calibration():
         flexValues[4] = int(ser.readline().strip())
         maxValues[4] = max(flexValues[4], maxValues[4])
         minValues[4] = min(flexValues[4], minValues[4])
+        print("Calibration Completed")
 
-        # print(flexValues) # array of all 5 finger values in loop
-        # print(maxValues)  # max values from the 5 fingers overall
-        # print(minValues)  # min values from the 5 fingers overall
-        # print()
-
+#loops through to check glove values and plots each finger.
+#Unity socket connection to app
 def plot_fingers():
     for i in range(10000):
         #pinky value
@@ -66,6 +65,7 @@ def plot_fingers():
         ser.write(thumb)
         flexValues[4] = map_range(int(ser.readline().strip()), minValues[4], maxValues[4])
         update_plot()
+        unityHand(flexValues[3], flexValues[2], flexValues[1], flexValues[0], flexValues[4])
 
 def unityHand(pointer, middle, ring, pinky, thumb):
     send = "%s, %s, %s, %s, %s" %(str(pointer), str(middle), str(ring), str(pinky), str(thumb))

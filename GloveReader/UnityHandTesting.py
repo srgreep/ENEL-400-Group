@@ -5,7 +5,6 @@ from math import pi
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 serverAddressPort = ("127.0.0.1", 5052)
 
-
 pointer = 200
 middle = 250
 ring = 257
