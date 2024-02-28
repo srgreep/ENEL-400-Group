@@ -19,5 +19,5 @@ while(True):
     thumb = 50*cos(t+3.5)+50
     send = "%s, %s, %s, %s, %s" %(str(pointer), str(middle), str(ring), str(pinky), str(thumb))
     sock.sendto(str.encode(str(send)), serverAddressPort)
-    sleep(.1)
+    sleep(.01)
    
