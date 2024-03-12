@@ -1,0 +1,4 @@
+Removed Pin From Net: NetName=+VBAT Pin=C14-1
+Removed Pin From Net: NetName=GND Pin=C14-2
+Removed Member From Class: ClassName=GC-Sch2 Member=C14
+Change Component Designator: OldDesignator=ENA NewDesignator=SW2

@@ -1,0 +1,11 @@
+Removed Pin From Net: NetName=+5V Pin=U10-7
+Change Component Comment : Designator=U5 Old Comment=REG71050DDC New Comment=REG71050DDCT
+Add Pin To Net: Unknown Pin: Pin SW1-1
+Add Pin To Net: Unknown Pin: Pin SW1-2
+Add Pin To Net: Unknown Pin: Pin SW2-1
+Add Pin To Net: Unknown Pin: Pin SW2-2
+Add Pin To Net: Unknown Pin: Pin SW3-1
+Add Pin To Net: Unknown Pin: Pin SW3-2
+Added Pin To Net: NetName=NetM2_4 Pin=U10-7
+Added Room: Name=GC-Sch2
+Added Room: Name=GC-Sch
