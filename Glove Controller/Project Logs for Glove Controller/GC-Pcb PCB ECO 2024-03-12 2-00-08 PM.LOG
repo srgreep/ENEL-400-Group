@@ -1,0 +1,13 @@
+Removed Pin From Net: NetName=FSO3_R Pin=R22-2
+Removed Pin From Net: NetName=FSO4_R Pin=R23-2
+Removed Pin From Net: NetName=FSO3_R Pin=U6-3
+Removed Pin From Net: NetName=FSO4_R Pin=U7-3
+Change Component Footprint: Designator=U10 Old Footprint= New Footprint=IC_BQ24045DSQR
+Added Pin To Net: NetName=FSO4_R Pin=R22-2
+Added Pin To Net: NetName=FSO3_R Pin=R23-2
+Added Pin To Net: NetName=FSO4_R Pin=U6-3
+Added Pin To Net: NetName=FSO3_R Pin=U7-3
+Change Net Name : Old Net Name=FSO3 New Net Name=FSO4
+Change Net Name : Old Net Name=FSO4 New Net Name=FSO3
+Added Room: Name=GC-Sch2
+Added Room: Name=GC-Sch
