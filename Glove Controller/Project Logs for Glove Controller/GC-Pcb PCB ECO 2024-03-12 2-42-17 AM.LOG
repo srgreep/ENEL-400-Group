@@ -1,0 +1,4 @@
+Removed Pin From Net: NetName=FSO2_R Pin=J2-3
+Removed Pin From Net: NetName=FSO3_R Pin=J2-7
+Added Pin To Net: NetName=FSO3_R Pin=J2-3
+Added Pin To Net: NetName=FSO2_R Pin=J2-7

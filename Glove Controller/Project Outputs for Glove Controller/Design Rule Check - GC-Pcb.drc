@@ -1,0 +1,87 @@
+Protel Design System Design Rule Check
+PCB File : C:\Users\noorg\OneDrive\Documents\GitHub\ENEL-400-Group\Glove Controller\GC-Pcb.PcbDoc
+Date     : 2024-03-12
+Time     : 12:51:57 PM
+
+Processing Rule : Clearance Constraint (Gap=0.203mm) (OnLayer('Bottom Layer')),(All)
+Rule Violations :0
+
+Processing Rule : Clearance Constraint (Gap=0.203mm) (OnLayer('Top Layer')),(All)
+Rule Violations :0
+
+Processing Rule : Clearance Constraint (Gap=0.2mm) (All),(All)
+   Violation between Clearance Constraint: (Collision < 0.2mm) Between Pad U10-12(65.71mm,20.363mm) on Multi-Layer And Region (0 hole(s)) Top Copper 
+   Violation between Clearance Constraint: (Collision < 0.2mm) Between Pad U10-13(65.71mm,19.363mm) on Multi-Layer And Region (0 hole(s)) Top Copper 
+   Violation between Clearance Constraint: (0.102mm < 0.2mm) Between Split Plane  (+3V3) on PWR And Split Plane  (+5V) on PWR 
+   Violation between Clearance Constraint: (0.102mm < 0.2mm) Between Split Plane  (+3V3) on PWR And Split Plane  (GND) on PWR 
+   Violation between Clearance Constraint: (0.102mm < 0.2mm) Between Split Plane  (+3V3) on PWR And Split Plane  (VCC) on PWR 
+   Violation between Clearance Constraint: (0.102mm < 0.2mm) Between Split Plane  (+5V) on PWR And Split Plane  (VCC) on PWR 
+   Violation between Clearance Constraint: (0.102mm < 0.2mm) Between Split Plane  (GND) on PWR And Split Plane  (VCC) on PWR 
+   Violation between Clearance Constraint: (0.124mm < 0.127mm) Between Track (66.66mm,19.463mm)(68.269mm,19.463mm) on Top Copper And Via (67.335mm,19.914mm) from Top Copper to Bottom Copper 
+   Violation between Clearance Constraint: (0.086mm < 0.127mm) Between Track (66.66mm,20.263mm)(67.64mm,20.263mm) on Top Copper And Via (67.335mm,19.914mm) from Top Copper to Bottom Copper 
+Rule Violations :9
+
+Processing Rule : Short-Circuit Constraint (Allowed=No) (All),(All)
+   Violation between Short-Circuit Constraint: Between Pad U10-12(65.71mm,20.363mm) on Multi-Layer And Region (0 hole(s)) Top Copper Location : [X = 91.11mm][Y = 45.763mm]
+   Violation between Short-Circuit Constraint: Between Pad U10-13(65.71mm,19.363mm) on Multi-Layer And Region (0 hole(s)) Top Copper Location : [X = 91.11mm][Y = 44.763mm]
+Rule Violations :2
+
+Processing Rule : Un-Routed Net Constraint ( (All) )
+   Violation between Un-Routed Net Constraint: Net GND Between Pad C8-1(50.151mm,21.742mm) on Top Copper And Pad C12-1(54.354mm,21.732mm) on Top Copper 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-S1(71.032mm,10.084mm) on Top Copper And Pad J1-S5(73.482mm,9.984mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad M2-2(65.743mm,14.316mm) on Top Copper And Pad M2-5(65.743mm,16.926mm) on Top Copper 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad U10-11(65.71mm,19.863mm) on Top Copper And Pad M2-5(65.743mm,16.926mm) on Top Copper 
+   Violation between Un-Routed Net Constraint: Net +5V Between Pad R31-2(69.788mm,20.828mm) on Top Copper And Pad R29-2(69.788mm,22.327mm) on Top Copper 
+   Violation between Un-Routed Net Constraint: Net +5V Between Pad U10-1(64.76mm,20.663mm) on Top Copper And Pad R31-2(69.788mm,20.828mm) on Top Copper 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad U10-3(64.76mm,19.863mm) on Top Copper And Pad U10-11(65.71mm,19.863mm) on Top Copper 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad U2-3(54.897mm,2.74mm) on Top Copper And Pad U2-29(55.397mm,5.131mm) on Top Copper 
+   Violation between Un-Routed Net Constraint: Net VCC Between Pad U8-3(51.746mm,24.181mm) on Top Copper And Pad U8-4(52.146mm,24.181mm) on Top Copper 
+   Violation between Isolated copper: Split Plane  (GND) on GND. Dead copper detected. Copper area is : 0.111 sq. mm
+   Violation between Isolated copper: Split Plane  (GND) on GND. Dead copper detected. Copper area is : 0.272 sq. mm
+   Violation between Isolated copper: Split Plane  (GND) on GND. Dead copper detected. Copper area is : 0.272 sq. mm
+Rule Violations :12
+
+Processing Rule : Modified Polygon (Allow modified: No), (Allow shelved: No)
+Rule Violations :0
+
+Processing Rule : Width Constraint (Min=0.089mm) (Max=2.54mm) (Preferred=0.254mm) (All)
+Rule Violations :0
+
+Processing Rule : Power Plane Connect Rule(Direct Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (All)
+Rule Violations :0
+
+Processing Rule : Minimum Annular Ring (Minimum=0.076mm) (All)
+   Violation between Minimum Annular Ring: (0.05mm < 0.076mm) Pad U10-12(65.71mm,20.363mm) on Multi-Layer (Annular Ring=0.05mm) On (Top Layer)
+   Violation between Minimum Annular Ring: (0.05mm < 0.076mm) Pad U10-13(65.71mm,19.363mm) on Multi-Layer (Annular Ring=0.05mm) On (Top Layer)
+Rule Violations :2
+
+Processing Rule : Hole Size Constraint (Min=0.2mm) (Max=6.3mm) (All)
+Rule Violations :0
+
+Processing Rule : Hole To Hole Clearance (Gap=0.254mm) (All),(All)
+Rule Violations :0
+
+Processing Rule : Minimum Solder Mask Sliver (Gap=0.1mm) (All),(All)
+   Violation between Minimum Solder Mask Sliver Constraint: (0.047mm < 0.1mm) Between Pad J1-1(70.807mm,11.984mm) on Top Copper And Pad J1-2(70.807mm,12.634mm) on Top Copper [Top Mask] Mask Sliver [0.047mm]
+   Violation between Minimum Solder Mask Sliver Constraint: (0.047mm < 0.1mm) Between Pad J1-2(70.807mm,12.634mm) on Top Copper And Pad J1-3(70.807mm,13.284mm) on Top Copper [Top Mask] Mask Sliver [0.047mm]
+   Violation between Minimum Solder Mask Sliver Constraint: (0.047mm < 0.1mm) Between Pad J1-3(70.807mm,13.284mm) on Top Copper And Pad J1-4(70.807mm,13.934mm) on Top Copper [Top Mask] Mask Sliver [0.047mm]
+   Violation between Minimum Solder Mask Sliver Constraint: (0.047mm < 0.1mm) Between Pad J1-4(70.807mm,13.934mm) on Top Copper And Pad J1-5(70.807mm,14.584mm) on Top Copper [Top Mask] Mask Sliver [0.047mm]
+Rule Violations :4
+
+Processing Rule : Silk To Solder Mask (Clearance=0.1mm) (IsPad),(All)
+   Violation between Silk To Solder Mask Clearance Constraint: (0.089mm < 0.1mm) Between Arc (50.927mm,23.622mm) on Top Overlay And Pad U8-1(50.946mm,24.181mm) on Top Copper [Top Overlay] to [Top Mask] clearance [0.089mm]
+Rule Violations :1
+
+Processing Rule : Silk to Silk (Clearance=0.1mm) (All),(All)
+Rule Violations :0
+
+Processing Rule : Net Antennae (Tolerance=0mm) (All)
+Rule Violations :0
+
+Processing Rule : Height Constraint (Min=0mm) (Max=25.4mm) (Prefered=12.7mm) (All)
+Rule Violations :0
+
+
+Violations Detected : 30
+Waived Violations : 0
+Time Elapsed        : 00:00:01

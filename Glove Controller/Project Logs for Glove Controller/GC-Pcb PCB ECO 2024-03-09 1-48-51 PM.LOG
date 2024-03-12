@@ -1,0 +1,4 @@
+Removed Pin From Net: NetName=FSO5 Pin=U1-26
+Added Pin To Net: NetName=FSO5 Pin=U1-27
+Added Room: Name=GC-Sch2
+Added Room: Name=GC-Sch

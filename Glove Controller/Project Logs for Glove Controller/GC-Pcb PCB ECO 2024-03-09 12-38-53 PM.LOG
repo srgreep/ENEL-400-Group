@@ -1,0 +1,8 @@
+Removed Pin From Net: NetName=EN Pin=C4-1
+Removed Pin From Net: NetName=GND Pin=C4-2
+Removed Member From Class: ClassName=GC-Sch Member=C4
+Change Component Designator: OldDesignator=BOOT NewDesignator=SW1
+Change Component Designator: OldDesignator=CAL NewDesignator=SW3
+Change Component Designator: OldDesignator=ENA NewDesignator=SW2
+Added Room: Name=GC-Sch2
+Added Room: Name=GC-Sch

@@ -1,0 +1,9 @@
+Removed Pin From Net: NetName=NetR2_2 Pin=U1-10
+Removed Pin From Net: NetName=FSO5 Pin=U1-27
+Removed Pin From Net: NetName=CAL Pin=U1-37
+Change Component Designator: OldDesignator=BOOT NewDesignator=SW1
+Added Pin To Net: NetName=NetR2_2 Pin=U1-8
+Added Pin To Net: NetName=CAL Pin=U1-11
+Added Pin To Net: NetName=FSO5 Pin=U1-26
+Added Room: Name=GC-Sch2
+Added Room: Name=GC-Sch
