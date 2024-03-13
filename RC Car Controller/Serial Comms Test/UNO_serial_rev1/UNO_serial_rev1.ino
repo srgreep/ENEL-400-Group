@@ -111,7 +111,7 @@ void control() {
   if (Fwd_Enable_Value > 10) { 
     // Joystick moved forward
     moveForward();
-  } else if (Rev_Enable_Value < 10)  {
+  } else if (Rev_Enable_Value > 10)  {
     // Joystick moved backward
     moveBackward();
   } else {
