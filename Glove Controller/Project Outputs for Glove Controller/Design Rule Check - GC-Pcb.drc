@@ -1,7 +1,7 @@
 Protel Design System Design Rule Check
 PCB File : C:\Users\noorg\OneDrive\Documents\GitHub\ENEL-400-Group\Glove Controller\GC-Pcb.PcbDoc
-Date     : 2024-03-12
-Time     : 2:08:29 PM
+Date     : 2024-03-13
+Time     : 12:07:12 PM
 
 Processing Rule : Clearance Constraint (Gap=0.203mm) (OnLayer('Bottom Layer')),(All)
 Rule Violations :0
@@ -25,6 +25,9 @@ Processing Rule : Width Constraint (Min=0.089mm) (Max=2.54mm) (Preferred=0.254mm
 Rule Violations :0
 
 Processing Rule : Power Plane Connect Rule(Direct Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (All)
+Rule Violations :0
+
+Processing Rule : Power Plane Connect Rule(Relief Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (InNet('+3V3'))
 Rule Violations :0
 
 Processing Rule : Minimum Annular Ring (Minimum=0.076mm) (All)
