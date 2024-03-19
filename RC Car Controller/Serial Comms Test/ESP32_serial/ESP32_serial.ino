@@ -1,3 +1,5 @@
+#include "SerialTransfer.h"
+#include "BluetoothSerial.h"
 #define RXp2 16
 #define TXp2 17
 #define POINTER_ADC 32//35    //Digital pin 35
@@ -6,7 +8,6 @@
 int thumb_value = 0;  //stores ADC variable
 int pointer_value = 0;
 
-#include "SerialTransfer.h"
 SerialTransfer myTransfer;
 
 struct __attribute__((packed)) STRUCT {
@@ -19,6 +20,7 @@ struct __attribute__((packed)) STRUCT {
 
 void setup() {
   Serial.begin(115200);
+  SerialBT.begin("Smart Glove RC Car");
   Serial1.begin(115200, SERIAL_8N1, RXp2, TXp2);
   myTransfer.begin(Serial1);
 
@@ -50,4 +52,29 @@ void loop() {
   Serial.println(sizeof(testStruct));   //code from forum,used to check size of testStruct...can be deleated by user if not needed
   Serial.println(" | ");
   delay(500);
+}
+
+void getFingerValues(){
+  SerialBT.Write("N");
+  testStruct.pinky = SerialBT.read();
+  SerialBT.Write("O");
+  testStruct.pointer = serialPort.read();
+  SerialBT.Write("P");
+  testStruct.middle = serialPort.read();
+  SerialBT.Write("Q");
+  testStruct.ring = serialPort.read();
+  SerialBT.Write("R");
+  testStruct.pinky = serialPort.read();
+}
+
+void appConnection(){
+  //Stuck here until app connection is confirmed
+  while(true){
+    if(SerialBT.available()){
+      if (SerialBT.read() == "~"){
+        Serial.println("Connected with app");
+        break;
+      }
+    }
+  }
 }
