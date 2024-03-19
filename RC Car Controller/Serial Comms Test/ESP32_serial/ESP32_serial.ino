@@ -36,10 +36,7 @@ void loop() {
   // use this variable to keep track of how many
   // bytes we're stuffing in the transmit buffer
   uint16_t sendSize = 0;
-  thumb_value  = analogRead(THUMB_ADC);
-  pointer_value  = analogRead(POINTER_ADC);
-  testStruct.thumb  = thumb_value;
-  testStruct.pointer = pointer_value;
+  getFingerValues();
   Serial.println(testStruct.thumb);
   Serial.println(" | ");
   Serial.println(testStruct.pointer);
