@@ -19,11 +19,11 @@ unsigned long lastCommunicationTime = 0;
 unsigned long communicationTimeout = 1000; // Set the timeout value in milliseconds
 
 struct __attribute__((packed)) STRUCT {
-  int16_t thumb;
-  int16_t pointer;
-  int16_t middle;
-  int16_t ring;
-  int16_t pinky;
+  int8_t thumb;
+  int8_t pointer;
+  int8_t middle;
+  int8_t ring;
+  int8_t pinky;
 } testStruct;
 
 void setup() {
@@ -38,7 +38,7 @@ void setup() {
   analogWrite(enablePinA, 0);
   analogWrite(enablePinB, 0);
 
-  Serial.begin(115200);
+  Serial.begin(9600);
   myTransfer.begin(Serial);
 }
 
@@ -46,15 +46,12 @@ void loop() {
   if (myTransfer.available()) {
     // Reset the timeout timer
     lastCommunicationTime = millis();
-    Serial.print(lastCommunicationTime);
-    Serial.print(" | ");
+    //Serial.print(lastCommunicationTime);
+    //Serial.print(" | ");
     // use this variable to keep track of how many
     // bytes we've processed from the receive buffer
-    uint16_t recSize = 0;
-
-
-
-    recSize = myTransfer.rxObj(testStruct, recSize);
+    uint8_t recSize = 0;
+    recSize = myTransfer.rxObj(testStruct, 5);
     Serial.print(testStruct.thumb);
     Serial.print(" | ");
     Serial.print(testStruct.pointer);
@@ -63,13 +60,7 @@ void loop() {
     Serial.print(" | ");
     Serial.print(testStruct.ring);
     Serial.print(" | ");
-    Serial.print(testStruct.pinky);
-    Serial.print(" | ");
-
-
-    Serial.println(sizeof(testStruct)); //code from forum,used to check size of testStruct...needs to be the same size as Tx testStruct
-    //delay(1000);
-    
+    Serial.println(testStruct.pinky);    
   }
   control();
 }
