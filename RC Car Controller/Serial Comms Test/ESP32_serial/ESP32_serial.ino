@@ -20,11 +20,11 @@ int pointer_value = 0;
 SerialTransfer myTransfer;
 BluetoothSerial SerialBT;
 struct __attribute__((packed)) STRUCT {
-  int16_t thumb;
-  int16_t pointer;
-  int16_t middle;
-  int16_t ring;
-  int16_t pinky;
+  int8_t thumb;
+  int8_t pointer;
+  int8_t middle;
+  int8_t ring;
+  int8_t pinky;
 } testStruct;
 
 void setup() {
@@ -49,13 +49,13 @@ void loop() {
   Serial.print(" | ");
   Serial.println(testStruct.pinky);
   ///////////////////////////////////////// Stuff buffer with struct
-  sendSize = myTransfer.txObj(testStruct, sendSize);
+  sendSize = myTransfer.txObj(testStruct, 5);
 
   ///////////////////////////////////////// Send buffer
   myTransfer.sendData(sendSize);
   //Serial.println(sizeof(testStruct));   //code from forum,used to check size of testStruct...can be deleated by user if not needed
   //Serial.println(" | ");
-  delay(500);
+  //delay(500);
 }
 
 void getFingerValues(){
