@@ -1,0 +1,481 @@
+*************************************************************
+FileName = GC-Pcb.GBR
+AutoAperture = True
+*************************************************************
+Generating : Bottom 3D Body
+      File : GC-Pcb.GM23
+
+    Adding Layer      : Bottom 3D Body
+
+
+Used DCodes :
+    D10
+    D13
+*************************************************************
+
+*************************************************************
+Generating : Bottom Courtyard
+      File : GC-Pcb.GM21
+
+    Adding Layer      : Bottom Courtyard
+
+
+Used DCodes :
+    D13
+    D89
+*************************************************************
+
+*************************************************************
+Generating : Top Component Center
+      File : GC-Pcb.GM16
+
+    Adding Layer      : Top Component Center
+
+
+Used DCodes :
+    D13
+*************************************************************
+
+*************************************************************
+Generating : Top Courtyard
+      File : GC-Pcb.GM15
+
+    Adding Layer      : Top Courtyard
+
+
+Used DCodes :
+    D11
+    D12
+    D13
+    D89
+*************************************************************
+
+*************************************************************
+Generating : Top 3D Body
+      File : GC-Pcb.GM13
+
+    Adding Layer      : Top 3D Body
+
+
+Used DCodes :
+    D10
+    D11
+    D12
+    D13
+    D86
+    D87
+    D88
+*************************************************************
+
+*************************************************************
+Generating : Dimensions
+      File : GC-Pcb.GM6
+
+    Adding Layer      : Dimensions
+
+
+Used DCodes :
+    D12
+    D62
+*************************************************************
+
+*************************************************************
+Generating : Top Assembly
+      File : GC-Pcb.GM5
+
+    Adding Layer      : Top Assembly
+
+
+Used DCodes :
+    D11
+*************************************************************
+
+*************************************************************
+Generating : Board Shape
+      File : GC-Pcb.GM2
+
+    Adding Layer      : Board Shape
+
+
+Used DCodes :
+    D13
+*************************************************************
+
+*************************************************************
+Generating : Mechanical 1
+      File : GC-Pcb.GM1
+
+    Adding Layer      : Mechanical 1
+
+
+Used DCodes :
+*************************************************************
+
+*************************************************************
+Generating : Keep-Out Layer
+      File : GC-Pcb.GKO
+
+    Adding Layer      : Keep-Out Layer
+
+
+Used DCodes :
+*************************************************************
+
+*************************************************************
+Generating : Bottom Overlay
+      File : GC-Pcb.GBO
+
+    Adding Layer      : Bottom Overlay
+
+
+Used DCodes :
+    D10
+    D11
+    D13
+*************************************************************
+
+*************************************************************
+Generating : Bottom Paste
+      File : GC-Pcb.GBP
+
+    Adding Layer      : Bottom Paste
+
+    Adding Layer      : Bottom Copper
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D26
+    D30
+*************************************************************
+
+*************************************************************
+Generating : Bottom Mask
+      File : GC-Pcb.GBS
+
+    Adding Layer      : Bottom Mask
+
+    Adding Layer      : Bottom Copper
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D43
+    D47
+    D52
+    D53
+    D54
+    D55
+    D56
+    D57
+    D58
+    D59
+*************************************************************
+
+*************************************************************
+Generating : Top Mask
+      File : GC-Pcb.GTS
+
+    Adding Layer      : Top Mask
+
+    Adding Layer      : Top Copper
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D21
+    D22
+    D23
+    D24
+    D25
+    D31
+    D32
+    D33
+    D35
+    D38
+    D39
+    D40
+    D41
+    D42
+    D43
+    D44
+    D45
+    D46
+    D47
+    D48
+    D49
+    D50
+    D51
+    D52
+    D53
+    D54
+    D55
+    D56
+    D57
+    D58
+    D59
+*************************************************************
+
+*************************************************************
+Generating : Top Paste
+      File : GC-Pcb.GTP
+
+    Adding Layer      : Top Paste
+
+    Adding Layer      : Top Copper
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D14
+    D15
+    D16
+    D17
+    D18
+    D19
+    D20
+    D21
+    D22
+    D23
+    D24
+    D25
+    D26
+    D27
+    D28
+    D29
+    D30
+    D31
+    D32
+    D33
+    D34
+    D35
+    D36
+    D37
+*************************************************************
+
+*************************************************************
+Generating : Top Overlay
+      File : GC-Pcb.GTO
+
+    Adding Layer      : Top Overlay
+
+
+Used DCodes :
+    D10
+    D11
+    D12
+    D13
+*************************************************************
+
+*************************************************************
+Generating : Top Pad Master
+      File : GC-Pcb.GPT
+
+    Adding Layer      : Top Copper
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D15
+    D16
+    D17
+    D18
+    D19
+    D20
+    D21
+    D22
+    D23
+    D24
+    D25
+    D26
+    D27
+    D28
+    D29
+    D30
+    D31
+    D32
+    D33
+    D34
+    D35
+    D36
+    D37
+    D48
+    D60
+    D61
+    D63
+    D64
+    D65
+    D66
+    D67
+    D68
+    D69
+    D70
+    D71
+*************************************************************
+
+*************************************************************
+Generating : Bottom Pad Master
+      File : GC-Pcb.GPB
+
+    Adding Layer      : Bottom Copper
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D26
+    D30
+    D63
+    D64
+    D65
+    D66
+    D67
+    D68
+    D69
+    D70
+    D71
+*************************************************************
+
+*************************************************************
+Generating : Bottom Copper
+      File : GC-Pcb.GBL
+
+    Adding Layer      : Bottom Copper
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D26
+    D30
+    D62
+    D63
+    D64
+    D65
+    D66
+    D67
+    D68
+    D69
+    D70
+    D71
+    D72
+    D73
+    D74
+*************************************************************
+
+*************************************************************
+Generating : PWR
+      File : GC-Pcb.GP2
+
+    Adding Layer      : PWR
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D62
+    D75
+    D76
+    D77
+    D78
+    D79
+    D80
+    D81
+    D82
+    D84
+    D85
+*************************************************************
+
+*************************************************************
+Generating : GND
+      File : GC-Pcb.GP1
+
+    Adding Layer      : GND
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D75
+    D76
+    D77
+    D78
+    D79
+    D80
+    D81
+    D82
+    D83
+*************************************************************
+
+*************************************************************
+Generating : Top Copper
+      File : GC-Pcb.GTL
+
+    Adding Layer      : Top Copper
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D10
+    D15
+    D16
+    D17
+    D18
+    D19
+    D20
+    D21
+    D22
+    D23
+    D24
+    D25
+    D26
+    D27
+    D28
+    D29
+    D30
+    D31
+    D32
+    D33
+    D34
+    D35
+    D36
+    D37
+    D48
+    D60
+    D61
+    D62
+    D63
+    D64
+    D65
+    D66
+    D67
+    D68
+    D69
+    D70
+    D71
+    D72
+    D73
+    D74
+*************************************************************
+
+*************************************************************
+Generating : Drill Drawing
+      File : GC-Pcb.GD1
+
+    Adding Drill Pair : Top Copper-Bottom Copper
+
+    Adding Layer      : Drill Drawing
+
+
+Used DCodes :
+    D90
+    D91
+    D92
+*************************************************************
+

@@ -1,0 +1,13 @@
+Output: NC Drill Files
+Type  : NC Drill
+From  : Project [Glove Controller.PrjPcb]
+   Generated File[GC-Pcb-RoundHoles.TXT]
+   Generated File[GC-Pcb-SlotHoles.TXT]
+   Generated File[GC-Pcb.LDP]
+   Generated File[GC-Pcb.DRR]
+
+
+Files Generated   : 4
+Documents Printed : 0
+
+Finished Output Generation At 6:51:57 PM On 2024-03-13
