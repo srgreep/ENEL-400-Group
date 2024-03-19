@@ -55,16 +55,12 @@ void loop() {
 }
 
 void getFingerValues(){
-  SerialBT.Write("N");
-  testStruct.pinky = SerialBT.read();
-  SerialBT.Write("O");
-  testStruct.pointer = serialPort.read();
-  SerialBT.Write("P");
-  testStruct.middle = serialPort.read();
-  SerialBT.Write("Q");
-  testStruct.ring = serialPort.read();
-  SerialBT.Write("R");
-  testStruct.pinky = serialPort.read();
+  appConnection(); //wait for connection
+  testStruct.thumb = toInt(SerialBT.read());
+  testStruct.pointer = toInt(serialPort.read());
+  testStruct.middle = toInt(serialPort.read());
+  testStruct.ring = toInt(serialPort.read());
+  testStruct.pinky = toInt(serialPort.read());
 }
 
 void appConnection(){
