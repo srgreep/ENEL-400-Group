@@ -30,6 +30,7 @@ struct __attribute__((packed)) STRUCT {
 void setup() {
   Serial.begin(9600);
   SerialBT.begin("Smart Glove RC Car");
+  SerialBT.setTimeout(500);
   Serial1.begin(9600, SERIAL_8N1, RXp2, TXp2);
   myTransfer.begin(Serial1);
 }
@@ -39,15 +40,15 @@ void loop() {
   // bytes we're stuffing in the transmit buffer
   uint16_t sendSize = 0;
   getFingerValues();
-  Serial.print(testStruct.thumb);
-  Serial.print(" | ");
-  Serial.print(testStruct.pointer);
-  Serial.print(" | ");
-  Serial.print(testStruct.middle);
-  Serial.print(" | ");
-  Serial.print(testStruct.ring);
-  Serial.print(" | ");
-  Serial.println(testStruct.pinky);
+  // Serial.print(testStruct.thumb);
+  // Serial.print(" | ");
+  // Serial.print(testStruct.pointer);
+  // Serial.print(" | ");
+  // Serial.print(testStruct.middle);
+  // Serial.print(" | ");
+  // Serial.print(testStruct.ring);
+  // Serial.print(" | ");
+  // Serial.println(testStruct.pinky);
   ///////////////////////////////////////// Stuff buffer with struct
   sendSize = myTransfer.txObj(testStruct, 5);
 
@@ -59,27 +60,18 @@ void loop() {
 }
 
 void getFingerValues(){
-  appConnection(); //wait for connection
-  char input[5];
+  char input[6];
   if(SerialBT.available()){
-    SerialBT.readBytes(input, 5);
+    SerialBT.readBytes(input, 6);
   }
-  
-  testStruct.thumb = (uint8_t)input[0];
-  testStruct.pointer = (uint8_t)input[1];
-  testStruct.middle = (uint8_t)input[2];
-  testStruct.ring = (uint8_t)input[3];
-  testStruct.pinky = (uint8_t)input[4];
-}
-//Waits for a prompt from app to tell it is ready to send values
-void appConnection(){
-  //Stuck here until app connection is confirmed
-  while(true){
-    if(SerialBT.available()){
-      if (SerialBT.read() == 126){
-        Serial.println("Connected with app");
-        break;
-      }
-    }
+  if(input[0]==126){
+    testStruct.thumb = (uint8_t)input[1];
+    testStruct.pointer = (uint8_t)input[2];
+    testStruct.middle = (uint8_t)input[3];
+    testStruct.ring = (uint8_t)input[4];
+    testStruct.pinky = (uint8_t)input[5];
+  }
+  else{
+    SerialBT.flush();
   }
 }
