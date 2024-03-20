@@ -46,21 +46,19 @@ void loop() {
   if (myTransfer.available()) {
     // Reset the timeout timer
     lastCommunicationTime = millis();
-    //Serial.print(lastCommunicationTime);
-    //Serial.print(" | ");
     // use this variable to keep track of how many
     // bytes we've processed from the receive buffer
     uint8_t recSize = 0;
     recSize = myTransfer.rxObj(testStruct, 5);
-    Serial.print(testStruct.thumb);
-    Serial.print(" | ");
-    Serial.print(testStruct.pointer);
-    Serial.print(" | ");
-    Serial.print(testStruct.middle);
-    Serial.print(" | ");
-    Serial.print(testStruct.ring);
-    Serial.print(" | ");
-    Serial.println(testStruct.pinky);    
+    // Serial.print(testStruct.thumb);
+    // Serial.print(" | ");
+    // Serial.print(testStruct.pointer);
+    // Serial.print(" | ");
+    // Serial.print(testStruct.middle);
+    // Serial.print(" | ");
+    // Serial.print(testStruct.ring);
+    // Serial.print(" | ");
+    // Serial.println(testStruct.pinky);    
   }
   control();
 }
@@ -95,10 +93,10 @@ void control() {
   analogWrite(enablePinB, abs(speedB));
 
     //Insure threshold of 10 is surpassed before forward or reverse movement,  Testing with 10.
-  if (Fwd_Enable_Value > 10) { 
+  if (Fwd_Enable_Value > 30) { 
     // Joystick moved forward
     moveForward();
-  } else if (Rev_Enable_Value > 10)  {
+  } else if (Rev_Enable_Value > 30)  {
     // Joystick moved backward
     moveBackward();
   } else {
