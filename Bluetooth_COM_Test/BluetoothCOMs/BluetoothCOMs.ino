@@ -123,12 +123,11 @@ void read_ADC_values(){
 //Set the transmission structer variables
 void set_transmit_data(){
   //Set data to ADC values (May be replaced with different value in the future if the actions are set on this side)
-  finger_data.thumb = map(thumb_value, thumb_min, thumb_max, 0, 100);             //calibration_scale(thumb_value, thumb_min, thumb_max);
-  finger_data.pointer = map(pointer_value, pointer_min, pointer_max , 0, 100);    //calibration_scale(pointer_value, pointer_min, pointer_max);
-  finger_data.middle = map(middle_value, middle_min, middle_max, 0, 100);         //calibration_scale(middle_value, middle_min, middle_max);
-  finger_data.ring = map(ring_value, ring_min, ring_max, 0, 100);                 //calibration_scale(ring_value, ring_min, ring_max);
-  finger_data.pinky = map(pinky_value, pinky_min, pinky_max, 0, 100);             //calibration_scale(pinky_value, pinky_min, pinky_max);     //thumb = 0 ? <0 : thumb;
-  
+  finger_data.thumb = abs(map(thumb_value, thumb_min, thumb_max, 0, 100));             //calibration_scale(thumb_value, thumb_min, thumb_max);
+  finger_data.pointer = abs(map(pointer_value, pointer_min, pointer_max , 0, 100));    //calibration_scale(pointer_value, pointer_min, pointer_max);
+  finger_data.middle = abs(map(middle_value, middle_min, middle_max, 0, 100));         //calibration_scale(middle_value, middle_min, middle_max);
+  finger_data.ring = abs(map(ring_value, ring_min, ring_max, 0, 100));                 //calibration_scale(ring_value, ring_min, ring_max);
+  finger_data.pinky = abs(map(pinky_value, pinky_min, pinky_max, 0, 100));             //calibration_scale(pinky_value, pinky_min, pinky_max);     //thumb = 0 ? <0 : thumb;  
 }
 
 //Check ADC values if they are the same, and set transmit data
@@ -157,7 +156,7 @@ void GPIO_init(){
 
 //Initlization of the BT
 void BT_init(){
-  SerialBT.begin("Smart Glove");
+  SerialBT.begin("Smart Glove");    //Device name
 }
 
 //Checks if the ESP32 is connected to the computer
@@ -169,7 +168,6 @@ void check_connection(){
   else{
     connected_flag = 0;                //If bluetooth is not connected set connected_flag low
     digitalWrite(LED_CALIBRATE, LOW);  //Write LED low if not connected
-    Serial.println("why?");
   }
 }
 
@@ -275,10 +273,10 @@ void check_above_or_below(){
     pinky_max = pinky_value;
 }
 
-//returns value of 0-100 for range given by max and min calibrate function
-int calibration_scale(int ADC_value, int min_value, int max_value){
-    return ((ADC_value - min_value)/(max_value - min_value)) * 100;
-}
+// //returns value of 0-100 for range given by max and min calibrate function
+// int calibration_scale(int ADC_value, int min_value, int max_value){
+//     return ((ADC_value - min_value)/(max_value - min_value)) * 100;
+// }
 
 //Resets the max and min values for re-calibration
 void reset_min_max(){
@@ -302,8 +300,8 @@ void reset_min_max(){
 //  ---- State-Machine Functions  ----
 
 void power_on_state(){  
-  //Debugging
-  Serial.print("power_on_state\n");
+  // //Debugging
+  // Serial.print("power_on_state\n");
 
   //State loop
   while(state == POWER_ON_STATE){
