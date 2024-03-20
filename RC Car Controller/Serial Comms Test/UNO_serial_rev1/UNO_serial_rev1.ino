@@ -89,10 +89,6 @@ void control() {
   speedA = constrain(speedA, 0, 255);
   speedB = constrain(speedB, 0, 255);
 
-    // Serial.print(speedA);
-    // Serial.print(" | ");
-    // Serial.print(speedB);
-    // Serial.print(" | ");
 
   // Set motor speeds and directions
   analogWrite(enablePinA, abs(speedA));
@@ -106,8 +102,7 @@ void control() {
     // Joystick moved backward
     moveBackward();
   } else {
-    // Joystick is centered in Y direction
-    // Stop the motors
+    
     stopMotors();
   }
   if (millis() - lastCommunicationTime > communicationTimeout) {
