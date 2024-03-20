@@ -137,7 +137,7 @@ void check_ADC_values(){
      pointer_value == finger_data.pointer &
      middle_value == finger_data.middle &
      ring_value == finger_data.ring &
-     middle_value == finger_data.pinky)
+     pinky_value == finger_data.pinky)
     return;
 
   //If values are not the same
@@ -175,19 +175,19 @@ void check_connection(){
 void BT_data_select(int intputBT){
   switch (inputBT){
         case 78:
-          SerialBT.println(finger_data.pinky);
+          SerialBT.println(finger_data.thumb);
           break;
         case 79:
-          SerialBT.println(finger_data.ring);
+          SerialBT.println(finger_data.pointer);
         break;
         case 80:
           SerialBT.println(finger_data.middle);
         break;
         case 81:
-          SerialBT.println(finger_data.pointer);
+          SerialBT.println(finger_data.ring);
         break;
         case 82:
-          SerialBT.println(finger_data.thumb);
+          SerialBT.println(finger_data.pink);
         break;
         default:
         break;
