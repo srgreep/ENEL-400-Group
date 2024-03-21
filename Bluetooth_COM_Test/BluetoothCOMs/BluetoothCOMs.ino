@@ -235,10 +235,7 @@ void find_max_min() {
   int pink_v = analogRead(PINKY_ADC);
 
   //Thumb - Check if ADC value is above or below min
-  Serial.print("Thumb Min: ");
-  Serial.print(thumb_min);
-  Serial.print(" Thumb Max: ");
-  Serial.println(thumb_max);
+  
   thumb_min = min(thb_v, thumb_min);
   thumb_max = max(thb_v, thumb_max);
   

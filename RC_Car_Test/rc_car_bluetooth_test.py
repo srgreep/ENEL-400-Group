@@ -12,7 +12,6 @@ def write_to_rc(hand):
         #     c = ser.read()
 
  
- 
 if __name__ == "__main__":
     port = 'COM13'
     while True:
