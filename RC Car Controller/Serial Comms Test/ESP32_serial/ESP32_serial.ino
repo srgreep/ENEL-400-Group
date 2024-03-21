@@ -60,18 +60,32 @@ void loop() {
 }
 
 void getFingerValues(){
+ 
   char input[6];
-  if(SerialBT.available()){
-    SerialBT.readBytes(input, 6);
-  }
+  while(!SerialBT.available()){}
+  SerialBT.readBytes(input, 6);
+  Serial.print((uint8_t)input[0]);
+  Serial.print(" | ");
+  Serial.print((uint8_t)input[1]);
+  Serial.print(" | ");
+  Serial.print((uint8_t)input[2]);
+  Serial.print(" | ");
+  Serial.print((uint8_t)input[3]);
+  Serial.print(" | ");
+  Serial.print((uint8_t)input[4]);
+  Serial.print(" | ");
+  Serial.println((uint8_t)input[5]);
   if(input[0]==126){
     testStruct.thumb = (uint8_t)input[1];
     testStruct.pointer = (uint8_t)input[2];
     testStruct.middle = (uint8_t)input[3];
     testStruct.ring = (uint8_t)input[4];
     testStruct.pinky = (uint8_t)input[5];
+    SerialBT.write(126);
   }
+
   else{
-    SerialBT.flush();
+    
   }
 }
+//Waits for a prompt from app to tell it is ready to send values
