@@ -1,22 +1,23 @@
-#include "BluetoothSerial.h"
+#include <BluetoothSerial.h>
 #include <Arduino.h>
+#include <Preferences.h>
 
 
 //**************************************************************************************
 // ---- Macro-definitions ----
 
 // -- ADC Pins --
-#define THUMB_ADC 32    //34      //Digital pin 34
-#define POINTER_ADC 35  //35    //Digital pin 35
-#define MIDDLE_ADC 34   //32     //Digital pin 32
-#define RING_ADC 39     //33       //Digital pin 33
-#define PINKY_ADC 36    //25      //Digital pin 25
+#define THUMB_ADC 4              //Digital pin 34
+#define POINTER_ADC 2           //Digital pin 35
+#define MIDDLE_ADC 15         //Digital pin 32
+#define RING_ADC 13            //Digital pin 33
+#define PINKY_ADC 12           //Digital pin 25
 
 // -- Input Pins --
 #define CALIBRATE_BTN 26  //Digital pin 26
 
 //-- Output pins --
-#define LED_CALIBRATE 27
+#define LED_CALIBRATE 32
 
 //  -- State Macros --
 #define POWER_ON_STATE 0
@@ -38,24 +39,47 @@ int pinky_value = 0;    //stores ADC variable
 int inputBT;               //Bluetooth Variable
 BluetoothSerial SerialBT;  //Bluetooth serial functionality variable
 
+// -- Non-Volatile Memoery --
+Preferences preferences; 
 
 // -- State Variables --
-int state = CALIBRATION_STATE;  //Setting state to default ON-state (extern)
+int state = POWER_ON_STATE;  //Setting state to default ON-state (extern)
 bool connected_flag = 0;        //Default as low  (extern)
 bool calibrate_flag = 0;        //Default as low  (extern)
 bool transmit_flag = 0;         //Default as low  (extern)
 
 // -- Calibration Variables --
-int thumb_min = 4095;    //Min ADC value
-int thumb_max = 0;       //Max ADC value
-int pointer_min = 4095;  //Min ADC value
-int pointer_max = 0;     //Max ADC value
-int middle_min = 4095;   //Min ADC value
-int middle_max = 0;      //Max ADC value
-int ring_min = 4095;     //Min ADC value
-int ring_max = 0;        //Max ADC value
-int pinky_min = 4095;    //Min ADC value
-int pinky_max = 0;       //Max ADC value
+int  thumb_min = 4095;    //Min ADC value
+int  thumb_max = 0;       //Max ADC value
+int  pointer_min = 4095;  //Min ADC value
+int  pointer_max = 0;     //Max ADC value
+int  middle_min = 4095;   //Min ADC value
+int  middle_max = 0;      //Max ADC value
+int  ring_min = 4095;     //Min ADC value
+int  ring_max = 0;        //Max ADC value
+int  pinky_min = 4095;    //Min ADC value
+int  pinky_max = 0;       //Max ADC value
+
+
+  //Values for taking average during calibration
+int sample_count = 0;
+unsigned long  thumb_avg = 0;      
+unsigned long  pointer_avg = 0;    
+unsigned long  middle_avg = 0;      
+unsigned long  ring_avg = 0;        
+unsigned long  pinky_avg = 0;   
+
+int closed_thumb_value = 2600;
+int closed_pointer_value = 2600;
+int closed_middle_value = 2050;
+int closed_ring_value = 2250;
+int closed_pinky_value = 2950;
+
+int open_thumb_value = 3200;
+int open_pointer_value = 3300;
+int open_middle_value = 2500;
+int open_ring_value = 2900;
+int open_pinky_value = 3350;
 
 //-- Timer flag --
 bool timer_flag = 0;
@@ -134,11 +158,11 @@ void populate_structure() {
   //Set data to ADC values (May be replaced with different value in the future if the actions are set on this side)
   read_ADC_values();
   floor_ceiling_struct();
-  finger_data.thumb = map(thumb_value, thumb_min, thumb_max, 0, 100);
-  finger_data.pointer = map(pointer_value, pointer_min, pointer_max, 0, 100);
-  finger_data.middle = map(middle_value, middle_min, middle_max, 0, 100);
-  finger_data.ring = map(ring_value, ring_min, ring_max, 0, 100);
-  finger_data.pinky = map(pinky_value, pinky_min, pinky_max, 0, 100);
+  finger_data.thumb = 100 - map(thumb_value, thumb_min, thumb_max, 0, 100);
+  finger_data.pointer = 100 - map(pointer_value, pointer_min, pointer_max, 0, 100);
+  finger_data.middle = 100 - map(middle_value, middle_min, middle_max, 0, 100);
+  finger_data.ring = 100 - map(ring_value, ring_min, ring_max, 0, 100);
+  finger_data.pinky = 100 - map(pinky_value, pinky_min, pinky_max, 0, 100);
 }
 
 //Check ADC values if they are the same, and set transmit data
@@ -159,7 +183,7 @@ void GPIO_init() {
 
 //Initlization of the BT
 void BT_init() {
-  SerialBT.begin("Smart Glove");  //Device name
+  SerialBT.begin("Smart Glove V2");  //Device name
 }
 
 //Checks if the ESP32 is connected to the computer
@@ -213,52 +237,231 @@ void TIMER_init() {
   timerAlarmWrite(My_timer, 5000000, true);        //Setting 5s timer
 }
 
-//Find the max and min values for calibration
-void find_max_min_values() {
-  Serial.print("Enter Find\n");
-  timerAlarmEnable(My_timer);  //Enable timer (5s till interrupt for calibrate)
-  reset_min_max();
-  while (timer_flag == 0) {
-    find_max_min();
-  }
-  timerAlarmDisable(My_timer);  //Disable timer (5s till interrupt for calibrate)
-  timer_flag = 0;
-  Serial.print("Leave Find\n");
-}
-
-//Check and set the max and min values after each ADC read for the calibrate function
-void find_max_min() {
-  int thb_v = analogRead(THUMB_ADC);
-  int pnt_v = analogRead(POINTER_ADC);
-  int mid_v = analogRead(MIDDLE_ADC);
-  int rng_v = analogRead(RING_ADC);
-  int pink_v = analogRead(PINKY_ADC);
-
-  //Thumb - Check if ADC value is above or below min
-  
-  thumb_min = min(thb_v, thumb_min);
-  thumb_max = max(thb_v, thumb_max);
-  
-  //Pointer - Check if ADC value is above or below min
-  pointer_min = min(pnt_v, pointer_min);
-  pointer_max = max(pnt_v, pointer_max);
-
-  //Middle - Check if ADC value is above or below min
-  middle_min = min(mid_v, middle_min);
-  middle_max = max(mid_v, middle_max);
-
-  //Ring - Check if ADC value is above or below min
-  ring_min = min(rng_v, ring_min);
-  ring_max = max(rng_v, ring_max);
-
-  //Pinky - Check if ADC value is above or below min
-  pinky_min = min(pink_v, pinky_min);
-  pinky_max = max(pink_v, pinky_max);
-}
+// //Find the max and min values for calibration
+// void find_max_min_values() {
+//   timerAlarmEnable(My_timer);  //Enable timer (5s till interrupt for calibrate)
+//   reset_min_max();
+//   while (timer_flag == 0) {
+//     find_max_min();
+//   }
+//   timerAlarmDisable(My_timer);  //Disable timer (5s till interrupt for calibrate)
+//   timer_flag = 0;
+//   Serial.print("Leave Find\n");
+// }
 
 void reset_min_max() {
   thumb_min, pointer_min, middle_min, ring_min, pinky_min = 4095;
   thumb_max, pointer_max, middle_max, ring_max, pinky_max = 0;
+}
+
+
+//---------------------------
+
+void reset_avg_values(){
+  thumb_avg = 0;
+  pointer_avg = 0;
+  middle_avg = 0;
+  ring_avg = 0;  
+  pinky_avg = 0;
+}
+
+void find_max_values(){
+  reset_avg_values();
+  sample_count = 0;  //Reset sample count for average
+
+  //Start of sampling to user
+  digitalWrite(LED_CALIBRATE, HIGH);  
+
+  //Sample each finger 100 times
+  while(sample_count < 1000){
+    thumb_avg = thumb_avg + analogRead(THUMB_ADC);
+    pointer_avg = pointer_avg + analogRead(POINTER_ADC);
+    middle_avg = middle_avg + analogRead(MIDDLE_ADC);
+    ring_avg = ring_avg + analogRead(RING_ADC);
+    pinky_avg = pinky_avg + analogRead(PINKY_ADC);
+    sample_count++;
+  }
+
+  //Take average
+  thumb_min = thumb_avg / 1000;
+  pointer_min = pointer_avg / 1000;
+  middle_min = middle_avg / 1000;
+  ring_min = ring_avg / 1000;
+  pinky_min = pinky_avg / 1000;
+
+  Serial.print("Thumb max:");
+  Serial.println(thumb_max);
+}
+
+void find_min_values(){
+  reset_avg_values();
+  sample_count = 0;  //Reset sample count for average
+
+  //Sample each finger 100 times
+  while(sample_count < 1000){
+    thumb_avg = thumb_avg + analogRead(THUMB_ADC);
+    pointer_avg = pointer_avg + analogRead(POINTER_ADC);
+    middle_avg = middle_avg + analogRead(MIDDLE_ADC);
+    ring_avg = ring_avg + analogRead(RING_ADC);
+    pinky_avg = pinky_avg + analogRead(PINKY_ADC);
+    sample_count ++;
+  }
+
+  //Take average
+  thumb_max = thumb_avg / 1000;
+  pointer_max = pointer_avg / 1000;
+  middle_max = middle_avg / 1000;
+  ring_max = ring_avg / 1000;
+  pinky_max = pinky_avg / 1000;
+
+  digitalWrite(LED_CALIBRATE, HIGH); 
+  Serial.print("Thumb min:");
+  Serial.println(thumb_min);
+}
+
+void find_values(){
+  digitalWrite(LED_CALIBRATE, HIGH); 
+  delay(3000);        //Delay for 3s to allow time for the user
+  Serial.print("Enter");
+
+  while(1){
+    //Check that all values are below the open hand value -> delay 2 seconds -> check again (if true go to find min values)
+    if (check_open()){
+      Serial.println("Open Enter");
+      blink();
+      
+      //Second check for if statement
+      if (check_open()) {
+        Serial.println("Open Enter 2");
+        digitalWrite(LED_CALIBRATE, HIGH); 
+        find_min_values();
+        
+        while(1){
+          if(check_closed()){
+            Serial.println("Closed Enter3");
+            blink();
+            find_max_values();
+            calibrate_flag = 0;
+            return;
+          }
+        }
+      }    
+    }
+
+    //Check that all values are below the open hand value -> delay 2 seconds -> check again (if true go to find min values)
+    if (check_closed()){
+      Serial.println("Closed Enter");
+      blink();
+      
+      //Second check for if statement
+      if (check_closed()) {
+        Serial.println("Closed Enter2");
+        digitalWrite(LED_CALIBRATE, HIGH); 
+        find_max_values();
+        while(1){
+          if(check_open()){
+            Serial.println("Open Enter3");
+            blink();
+            find_min_values();
+            calibrate_flag = 0;
+            return;
+          }
+        }
+      }    
+    }
+
+    Serial.println("loop");
+  }
+}
+
+//Check if hand is closed
+int check_open(){
+  read_ADC_values();  //Read ADC
+  if (thumb_value > open_thumb_value &&
+      pointer_value > open_pointer_value &&
+      //middle_value < open_middle_value &&
+      ring_value > open_ring_value &&
+      pinky_value > open_pinky_value)
+      return 1;
+  else
+    return 0;
+}
+
+//Check if hand is closed
+int check_closed(){
+  read_ADC_values();
+  if (thumb_value < closed_thumb_value &&
+      pointer_value < closed_pointer_value &&
+      //middle_value > closed_middle_value &&
+      ring_value < closed_ring_value &&
+      pinky_value < closed_pinky_value)
+      return 1;
+  else 
+    return 0;
+}
+
+//Blink LED in 0.5s intervals for 5 loops
+void blink(){
+  for(int i = 0; i < 3; i++){
+      digitalWrite(LED_CALIBRATE, HIGH);  
+      delay(500);
+      digitalWrite(LED_CALIBRATE, LOW);  
+      delay(500);
+  }
+}
+
+void print_adc_values(){
+  Serial.print("thumb:");
+  Serial.println(thumb_value);
+  Serial.print("pointer:");
+  Serial.println(pointer_value);
+  Serial.print("middle:");
+  Serial.println(middle_value);
+  Serial.print("ring:");
+  Serial.println(ring_value);
+  Serial.print("pinky:");
+  Serial.println(pinky_value);
+}
+//**************************************************************************************
+//  ---- Memory Functions  ----
+
+//Write the maximum and minimum values to NVS
+void write_max_min_to_NVS(){
+  preferences.begin("my-app", false);   //Initlize NVS for writing
+
+  //-- Write Values --
+  //Thumb
+  preferences.putUInt("thumb_min", thumb_min);      // Write value to NVS with key "thumb_min"
+  preferences.putUInt("thumb_max", thumb_max);      // Write value to NVS with key "thumb_max"
+  //Pointer
+  preferences.putUInt("pointer_min", pointer_min);  // Write value to NVS with key "pointer_min"
+  preferences.putUInt("pointer_max", pointer_max);  // Write value to NVS with key "pointer_max"
+  //Middle
+  preferences.putUInt("middle_min", middle_min);    // Write value to NVS with key "middle_min"
+  preferences.putUInt("middle_max", middle_max);    // Write value to NVS with key "middle_max"
+  //Ring
+  preferences.putUInt("ring_min", ring_min);        // Write value to NVS with key "ring_min"
+  preferences.putUInt("ring_max", ring_max);        // Write value to NVS with key "ring_max"
+  //Pinky
+  preferences.putUInt("pinky_min", pinky_min);      // Write value to NVS with key "pinky_min"
+  preferences.putUInt("pinky_max", pinky_max);      // Write value to NVS with key "pinky_max"
+
+  preferences.end();      //End access to NVS
+}
+
+void read_max_min_from_NVS(){
+  preferences.begin("my-app", true); // Namespace "my-app", read-only mode enabled
+
+  thumb_min = preferences.getUInt("thumb_min", 0);      //Read from NVS with key "thumb_min" (0 is default value if key not found)
+  thumb_max =  preferences.getUInt("thumb_max", 4095);     //Read from NVS with key "thumb_min" (0 is default value if key not found)
+  pointer_min = preferences.getUInt("pointer_min", 0);  //Read from NVS with key "pointer_min" (0 is default value if key not found)
+  pointer_max = preferences.getUInt("pointer_max", 4095);  //Read from NVS with key "pointer_max" (0 is default value if key not found)   
+  middle_min = preferences.getUInt("middle_min", 0);    //Read from NVS with key "middle_min" (0 is default value if key not found)
+  middle_max = preferences.getUInt("middle_max", 4095);    //Read from NVS with key "middle_max" (0 is default value if key not found)
+  ring_min = preferences.getUInt("ring_min", 0);        //Read from NVS with key "ring_min" (0 is default value if key not found)
+  ring_max = preferences.getUInt("ring_max", 4095);        //Read from NVS with key "ring_max" (0 is default value if key not found)   
+  pinky_min = preferences.getUInt("pinky_min", 0);      //Read from NVS with key "pinky_min" (0 is default value if key not found)    
+  pinky_max = preferences.getUInt("pinky_max", 4095);      //Read from NVS with key "pinky_max" (0 is default value if key not found)  
 }
 
 //**************************************************************************************
@@ -266,7 +469,7 @@ void reset_min_max() {
 
 void power_on_state() {
   // //Debugging
-  // Serial.print("power_on_state\n");
+  Serial.print("power_on_state\n");
 
   //State loop
   while (state == POWER_ON_STATE) {
@@ -278,12 +481,18 @@ void power_on_state() {
     //-- Check Connection --
     check_connection();  //Call "check_connection" function -> Wirelss_COMS files
     calibration_btn_polling();
+
+    //Debug
+    // read_ADC_values();
+    // print_adc_values();
+    // Serial.print("\n");
+    // delay(2000);
   }
 }
 
 void data_read_state() {
   ////Debugging
-  //Serial.print("data_read_state\n");
+  Serial.print("data_read_state\n");
   //delay(2000);
   //-----------
 
@@ -296,6 +505,7 @@ void data_read_state() {
       state = CALIBRATION_STATE;
     else if (transmit_flag == 1)
       state = TRANSMIT_STATE;
+      
     check_ADC_values();  //Check and set the transmit structure data
     calibration_btn_polling();
   }
@@ -303,22 +513,26 @@ void data_read_state() {
 
 void calibration_state() {
   ////Debugging
-  //Serial.print("calibration_state\n");
+  Serial.print("calibration_state\n");
   ///---------------
 
   //State loop
   while (state == CALIBRATION_STATE) {
+    //-- Call calibration function ---
+    Serial.print("Max & Min\n");
+    digitalWrite(LED_CALIBRATE, LOW);
+    find_values();
+    // find_max_values();
+    // find_min_values();
+    write_max_min_to_NVS();
+    check_connection();
+
     // -- State Checking --
     if (connected_flag == 0)
       state = POWER_ON_STATE;
     else if (calibrate_flag == 0)
       state = DATA_READ_STATE;
 
-    //-- Call calibration function ---
-    Serial.print("Max & Min\n");
-    digitalWrite(LED_CALIBRATE, LOW);
-    find_max_min_values();
-    calibrate_flag = 0;
   }
   digitalWrite(LED_CALIBRATE, HIGH);
 }
@@ -348,10 +562,11 @@ void transmission_state() {
 //  ---- Setup Function  ----
 
 void setup() {
-  Serial.begin(9600);  //FOR DEBUGGING
-  BT_init();           //Bluetooth initilization
-  GPIO_init();         //GPIO initilization
-  TIMER_init();        //Timer initilization
+  Serial.begin(9600);       
+  BT_init();                //Bluetooth initilization
+  GPIO_init();              //GPIO initilization
+  TIMER_init();             //Timer initilization
+  read_max_min_from_NVS();  //Read values for finger max and min values from NVS
 }
 
 //**************************************************************************************
