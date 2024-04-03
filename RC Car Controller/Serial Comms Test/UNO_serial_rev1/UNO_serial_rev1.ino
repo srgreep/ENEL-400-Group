@@ -74,14 +74,14 @@ void control() {
 
 
   // Map joystick values to speed range (0 to 255)
-  int speedA = map(Throttle_Value, 0, 100, 0, 255);  // Expecting 0 to 100 value
-  int speedB = map(Throttle_Value, 0, 100, 0, 255);
+  int speedA = map(Throttle_Value, 0, 100, 0, 175);  // Expecting 0 to 100 value
+  int speedB = map(Throttle_Value, 0, 100, 0, 175);
 
 
 
   // Limit speed based on X-axis position for turning
-  speedA -= map(Left_Value, 0, 100, 0, 100);  // Adjust most right value for fine adjustments
-  speedB -= map(Right_Value, 0, 100, 0, 100);
+  speedA -= map(Left_Value, 0, 100, 0, 75);  // Adjust most right value for fine adjustments
+  speedB -= map(Right_Value, 0, 100, 0, 75);
 
   // Constrain speed values to valid range
   speedA = constrain(speedA, 0, 255);
@@ -93,10 +93,10 @@ void control() {
   analogWrite(enablePinB, abs(speedB));
 
     //Insure threshold of 10 is surpassed before forward or reverse movement,  Testing with 10.
-  if (Fwd_Enable_Value > 30) { 
+  if (Fwd_Enable_Value > 50) { 
     // Joystick moved forward
     moveForward();
-  } else if (Rev_Enable_Value > 30)  {
+  } else if (Rev_Enable_Value > 50)  {
     // Joystick moved backward
     moveBackward();
   } else {

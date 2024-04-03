@@ -13,7 +13,7 @@ def write_to_rc(hand):
 
  
 if __name__ == "__main__":
-    port = 'COM13'
+    port = 'COM10'
     while True:
         try:
             ser = serial.Serial(port, 9600, timeout=0.5)
